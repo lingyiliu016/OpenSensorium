@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# Env / secrets
+.env
+*.local
+config.local.*
+secrets.*
+*.key
+*.pem
+
+# Models / weights / large artifacts (never commit weights)
+models/
+weights/
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Runtime data
+logs/
+*.log
+data/
+recordings/
+memory_store/
+audit/
+*.sqlite
+*.db
+
+# Media scratch
+*.jpg
+*.jpeg
+*.png
+*.wav
+*.mp4
+!docs/**/*.png
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
