@@ -1,0 +1,22 @@
+# OpenSensorium 配置样例 —— 复制为 config.yaml（默认值）或 config.local.yaml（本机私有覆盖）。
+#
+# 分层覆盖优先级（低 → 高）：
+#   内置默认 < config.yaml < config.local.yaml < 环境变量(OPENSENSORIUM_*)
+#
+# 私密项（推理服务真实地址、各类密钥）请放 config.local.yaml —— 它已在 .gitignore，不会被提交。
+# 环境变量覆盖示例： OPENSENSORIUM_INFERENCE__BASE_URL=http://192.168.1.20:8070
+
+# 推理服务：跑在 4090 台式机上，笔记本 Core 通过局域网访问
+inference:
+  base_url: "http://127.0.0.1:8070"   # 改成 4090 主机的 http://<4090-ip>:<port>
+  model: "minicpm-o"                   # 默认模型（对应 Adapter 注册名：minicpm-o / joyai-vl）
+  request_timeout_s: 30.0
+
+# 采集 / 流基线（对齐 PRD §6.6）
+stream:
+  audio_sample_rate: 16000   # 16kHz 单声道 PCM16
+  audio_chunk_s: 1.0
+  video_fps: 1.0             # 基线 ~1fps，最高 10
+  video_max_pixels: 1800000  # ≤ ~180 万像素
+
+log_level: "INFO"
