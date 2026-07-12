@@ -114,7 +114,6 @@ class TestThink:
 class TestThinkAsync:
     @pytest.mark.asyncio
     async def test_think_async_returns_string(self):
-
         async_client = MagicMock()
         choice = MagicMock()
         choice.message.content = "async reply"
