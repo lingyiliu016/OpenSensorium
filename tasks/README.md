@@ -26,7 +26,7 @@
 
 | 任务 | 标题 | PRD 对应 | 依赖 | 状态 |
 |---|---|---|---|---|
-| [T00](./T00-bootstrap-skeleton.md) | 仓库骨架 / 配置 / 日志 / 事件与意图数据模型 | §6.1、NFR 可观测 | — | 🟡 |
+| [T00](./T00-bootstrap-skeleton.md) | 仓库骨架 / 配置 / 日志 / 事件与意图数据模型 | §6.1、NFR 可观测 | — | ✅ |
 | [T01](./T01-deploy-minicpm-o-service.md) | 部署 **MiniCPM-o** 推理服务（4090，局域网可达） | §1.4、§6.3、FR-2M.1、§12.1 | T00 | ⬜ |
 | [T02](./T02-deploy-joyai-vl-service.md) | 部署 **JoyAI-VL** 推理服务（+Qwen3-ASR/TTS/bg-agent） | §1.4、§6.6、§12.11 | T00 | ⬜ |
 | [T03](./T03-model-adapter-framework.md) | Model Adapter 框架 + 能力协商 + 两款视觉路径 Adapter | FR-2M（全） | T01、T02 | ⬜ |
