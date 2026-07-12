@@ -79,6 +79,25 @@ def test_perception_event_rejects_unknown_modality():
         PerceptionEvent(source_id="x", modality="smell", seq=0)
 
 
+def test_perception_event_image_and_video_are_discrete_file_modalities():
+    # 离散文件（如飞书附件），区别于 camera/screen 实时流
+    img = PerceptionEvent(
+        source_id="feishu:u123",
+        modality="image",
+        seq=0,
+        payload={"file_ref": "buf://img1", "mime": "image/jpeg"},
+    )
+    vid = PerceptionEvent(
+        source_id="feishu:u123",
+        modality=Modality.VIDEO,
+        seq=1,
+        payload={"file_ref": "buf://vid1", "duration_s": 12.0},
+    )
+    assert img.modality is Modality.IMAGE
+    assert vid.modality is Modality.VIDEO
+    assert PerceptionEvent.model_validate_json(vid.model_dump_json()) == vid
+
+
 # --------------------------------------------------------------------------- #
 # Intent
 # --------------------------------------------------------------------------- #
@@ -103,6 +122,20 @@ def test_intent_construct_and_roundtrip(itype, payload):
 def test_intent_silent_defaults_empty_payload():
     intent = Intent(type=IntentType.SILENT)
     assert intent.payload == {}
+
+
+@pytest.mark.parametrize("spoken", [True, False])
+def test_intent_say_carries_spoken_delivery_hint(spoken):
+    # 语音 vs 纯文本是投递层约定，放 payload["spoken"]，不单列意图类型
+    intent = Intent(type=IntentType.SAY, payload={"text": "你好", "spoken": spoken})
+    restored = Intent.model_validate_json(intent.model_dump_json())
+    assert restored.type is IntentType.SAY
+    assert restored.payload["spoken"] is spoken
+
+
+def test_intent_say_without_spoken_defers_to_channel():
+    intent = Intent(type=IntentType.SAY, payload={"text": "你好"})
+    assert "spoken" not in intent.payload  # 不指定 → 由当前活跃通道决定朗读/文本
 
 
 # --------------------------------------------------------------------------- #

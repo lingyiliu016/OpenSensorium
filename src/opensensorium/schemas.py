@@ -44,11 +44,19 @@ class Timestamp(BaseModel):
 
 
 class Modality(str, Enum):
-    """感知模态。视觉为主、音频并行；预留可扩展。"""
+    """感知模态。视觉为主、音频并行；预留可扩展。
 
-    SCREEN = "screen"
-    CAMERA = "camera"
-    AUDIO = "audio"
+    实时流与离散文件分开建模：
+    - `SCREEN`/`CAMERA`/`AUDIO` 是连续采样的**实时流**（有 fps、有 seq）。
+    - `IMAGE`/`VIDEO` 是**离散文件**（如 Channel 收到的图片/视频附件、给定的媒体文件），
+      区别于 camera/screen 的实时帧。
+    """
+
+    SCREEN = "screen"  # 屏幕实时流
+    CAMERA = "camera"  # 摄像头实时流
+    IMAGE = "image"  # 离散图片文件/附件（非实时帧）
+    VIDEO = "video"  # 离散视频文件片段（非实时流）
+    AUDIO = "audio"  # 麦克风实时流
     TEXT = "text"  # 来自 Channel（如飞书）的文本输入
     EVENT = "event"  # 系统/调度等非采集事件源
 
@@ -85,10 +93,15 @@ class Intent(BaseModel):
     """认知核输出的一个意图。`payload` 承载类别相关细节。
 
     例：
-    - SAY  → {"text": "..."}
+    - SAY  → {"text": "...", "spoken": true}   # 走 TTS 朗读
+             {"text": "...", "spoken": false}  # 只输出文本，不朗读
+             {"text": "..."}                    # 不指定 → 由当前活跃通道决定（语音模式→TTS，飞书→文本）
     - ACT  → {"effector": "keyboard_mouse", "action": "click", "x": 100, "y": 200}
     - DELEGATE → {"delegate": "codex", "task": "..."}
     - SILENT → {}
+
+    注：语音 vs 纯文本属于**投递层**约定（payload 里的 `spoken`），不单列意图类型——
+    同一句"要说的话"可由当前通道决定朗读或纯文本，甚至两者兼有。
     """
 
     type: IntentType
