@@ -29,6 +29,7 @@
 | [T01](./T01-deploy-minicpm-o-service.md) | 部署 **MiniCPM-o** 推理服务（4090，局域网可达） | §1.4、§6.3、FR-2M.1、§12.1 | T00 | ⬜ |
 | [T02](./T02-deploy-joyai-vl-service.md) | 部署 **JoyAI-VL** 推理服务（+Qwen3-ASR/TTS/bg-agent） | §1.4、§6.6、§12.11 | T00 | ⬜ |
 | [T03](./T03-model-adapter-framework.md) | Model Adapter 框架 + 能力协商 + 两款视觉路径 Adapter | FR-2M（全） | T01、T02 | ⬜ |
+| [T25](./T25-ci-mock-inference-harness.md) | CI + 共享 mock 推理服务/测试夹具（支撑全程自带测试） | NFR 可观测、FR-2M | T00、T03 | ⬜ |
 
 ## 阶段 M0 · 骨架与防回音（视觉路径打通）
 
@@ -89,6 +90,12 @@
 | 任务 | 标题 | PRD 对应 | 依赖 | 状态 |
 |---|---|---|---|---|
 | [T23](./T23-cloud-pc-effector.md) | CloudPCEffector（复用键鼠+屏幕原语走远程通道，防回音判定） | §9.3、§9.4 | T13、T15 | ⬜ |
+
+## 阶段 v1.x · 桌面其它平台
+
+| 任务 | 标题 | PRD 对应 | 依赖 | 状态 |
+|---|---|---|---|---|
+| [T26](./T26-macos-linux-endpoints.md) | macOS / Linux 桌面 Endpoint（采集 + 防回音 + 输入注入） | §6.4、§3.6、NFR 跨平台 | T05、T06、T07、T13 | ⬜ |
 
 ## 阶段 M6+ · 走进物理世界（愿景，非 v1 承诺）
 
